@@ -1,0 +1,13 @@
+<h1>Solution</h1>
+
+<table>
+    {{range $i, $iv := .Values}}
+    <tr>
+        {{range $j, $jv := .}}
+        <td>
+            {{.}}
+        {{end}}
+        </td>
+    </tr>
+    {{end}}
+</table>
