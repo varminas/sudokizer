@@ -7,11 +7,9 @@ import (
 	"net/http"
 	"strconv"
 	"time"
-)
 
-type SudokuValues struct {
-	Values [9][9]uint8
-}
+	"github.com/sudokizer/src/resolver"
+)
 
 func check(err error) {
 	if err != nil {
@@ -29,7 +27,7 @@ func mainHandler(writer http.ResponseWriter, request *http.Request) {
 	html, err := template.ParseFiles("templates/input.html")
 	check(err)
 
-	sudokuValues := SudokuValues{}
+	sudokuValues := resolver.SudokuValues{}
 	for i := 0; i < len(sudokuValues.Values); i++ {
 		for j := 0; j < len(sudokuValues.Values[0]); j++ {
 			sudokuValues.Values[i][j] = 1
@@ -39,15 +37,15 @@ func mainHandler(writer http.ResponseWriter, request *http.Request) {
 	check(err)
 }
 
-func resolve(initValues SudokuValues) SudokuValues {
+func resolve(initValues resolver.SudokuValues) resolver.SudokuValues {
 	fmt.Printf("BEGIN of resolving: \t %s \n", time.Now())
-	// TODO
+	result := resolver.Resolve(initValues)
 	fmt.Printf("END of resolving: \t %s \n", time.Now())
-	return initValues
+	return result
 }
 
 func resolveHandler(writer http.ResponseWriter, request *http.Request) {
-	initSudokuValues := SudokuValues{}
+	initSudokuValues := resolver.SudokuValues{}
 
 	for i := 0; i < 9; i++ {
 		for j  := 0; j < 9; j++ {
