@@ -8,21 +8,22 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/sudokizer/src/resolver"
+	"sudokizer/model"
+	"sudokizer/resolver"
 )
 
 var t = template.Must(template.ParseFiles("templates/index.html"))
 var tSolution = template.Must(template.ParseFiles("templates/index.html", "templates/solution.html"))
 
 type SudokuSolution struct {
-	Values resolver.SudokuValues
+	Values model.SudokuValues
 	TimeStart string
 	TimeEnd string
 	ProcessingTime time.Duration
 }
 
 type AppState struct {
-	Inputs resolver.SudokuValues
+	Inputs model.SudokuValues
 	Solution SudokuSolution
 }
 
@@ -58,7 +59,7 @@ func mainHandler(writer http.ResponseWriter, request *http.Request) {
 }
 
 func homeHandler(writer http.ResponseWriter, request *http.Request) {
-	sudokuValues := resolver.SudokuValues{}
+	sudokuValues := model.SudokuValues{}
 	for i := 0; i < len(sudokuValues.Values); i++ {
 		for j := 0; j < len(sudokuValues.Values[0]); j++ {
 			sudokuValues.Values[i][j] = 1
@@ -72,7 +73,7 @@ func homeHandler(writer http.ResponseWriter, request *http.Request) {
 }
 
 func solutionHandler(writer http.ResponseWriter, request *http.Request) {
-	initSudokuValues := resolver.SudokuValues{}
+	initSudokuValues := model.SudokuValues{}
 
 	for i := 0; i < 9; i++ {
 		for j  := 0; j < 9; j++ {
@@ -93,7 +94,7 @@ func solutionHandler(writer http.ResponseWriter, request *http.Request) {
 	check(err)
 }
 
-func resolve(initValues resolver.SudokuValues) SudokuSolution {
+func resolve(initValues model.SudokuValues) SudokuSolution {
 	timeStart := time.Now()
 	fmt.Printf("BEGIN of resolving: \t %s \n", timeStart)
 	values := resolver.Resolve(initValues)
