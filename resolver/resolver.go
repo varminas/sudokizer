@@ -4,6 +4,6 @@ import (
 	"sudokizer/model"
 )
 
-func Resolve(initValues model.SudokuValues) model.SudokuValues {
-	return initValues
+func Resolve(initValues *model.SudokuValues) model.SudokuValues {
+	return *initValues
 }

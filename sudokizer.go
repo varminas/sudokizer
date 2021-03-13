@@ -73,7 +73,7 @@ func homeHandler(writer http.ResponseWriter, request *http.Request) {
 }
 
 func solutionHandler(writer http.ResponseWriter, request *http.Request) {
-	initSudokuValues := model.SudokuValues{}
+	initSudokuValues := &model.SudokuValues{}
 
 	for i := 0; i < 9; i++ {
 		for j  := 0; j < 9; j++ {
@@ -94,12 +94,15 @@ func solutionHandler(writer http.ResponseWriter, request *http.Request) {
 	check(err)
 }
 
-func resolve(initValues model.SudokuValues) SudokuSolution {
+func resolve(initValues *model.SudokuValues) SudokuSolution {
 	timeStart := time.Now()
 	fmt.Printf("BEGIN of resolving: \t %s \n", timeStart)
+
 	values := resolver.Resolve(initValues)
+
 	timeEnd := time.Now()
 	fmt.Printf("END of resolving: \t %s \n", timeEnd)
+	
 	processingTime := timeEnd.Sub(timeStart)
 	
 	return SudokuSolution{
