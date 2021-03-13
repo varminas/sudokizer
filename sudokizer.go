@@ -66,7 +66,6 @@ func homeHandler(writer http.ResponseWriter, request *http.Request) {
 		}
 	}
 	appState.Inputs = sudokuValues
-	// fmt.Println("state", appState)
 
 	var err = t.Execute(writer, appState)
 	check(err)
@@ -80,9 +79,10 @@ func solutionHandler(writer http.ResponseWriter, request *http.Request) {
 			formValueName := fmt.Sprintf("value-%d-%d", i, j)
 			formValueStr := request.FormValue(formValueName)
 			formValueInt, err := strconv.ParseInt(formValueStr, 10, 8)
-
-			check(err)
-			checkInt(formValueInt)
+			if err != nil {
+				formValueInt = 0
+			}
+			// checkInt(formValueInt)
 
 			initSudokuValues.Values[i][j] = uint8(formValueInt)
 		}
@@ -102,7 +102,7 @@ func resolve(initValues *model.SudokuValues) SudokuSolution {
 
 	timeEnd := time.Now()
 	fmt.Printf("END of resolving: \t %s \n", timeEnd)
-	
+
 	processingTime := timeEnd.Sub(timeStart)
 	
 	return SudokuSolution{
