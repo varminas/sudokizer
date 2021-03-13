@@ -11,6 +11,36 @@ import (
 	"github.com/sudokizer/src/resolver"
 )
 
+var t = template.Must(template.ParseFiles("templates/index.html"))
+var tSolution = template.Must(template.ParseFiles("templates/index.html", "templates/solution.html"))
+
+type SudokuSolution struct {
+	Values resolver.SudokuValues
+	TimeStart string
+	TimeEnd string
+	ProcessingTime time.Duration
+}
+
+type AppState struct {
+	Inputs resolver.SudokuValues
+	Solution SudokuSolution
+}
+
+var appState = AppState{}
+
+func main() {
+	fmt.Println("Starting Sudokizer at port 8080")
+
+	http.HandleFunc("/home", homeHandler)
+	http.HandleFunc("/solution", solutionHandler)
+	http.HandleFunc("/", mainHandler)
+
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+
+	err := http.ListenAndServe("localhost:8080", nil)
+	log.Fatal(err)
+}
+
 func check(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -24,27 +54,24 @@ func checkInt(value int64) {
 }
 
 func mainHandler(writer http.ResponseWriter, request *http.Request) {
-	html, err := template.ParseFiles("templates/input.html")
-	check(err)
+	http.Redirect(writer, request, "/home", http.StatusSeeOther)
+}
 
+func homeHandler(writer http.ResponseWriter, request *http.Request) {
 	sudokuValues := resolver.SudokuValues{}
 	for i := 0; i < len(sudokuValues.Values); i++ {
 		for j := 0; j < len(sudokuValues.Values[0]); j++ {
 			sudokuValues.Values[i][j] = 1
 		}
 	}
-	err = html.Execute(writer, sudokuValues)
+	appState.Inputs = sudokuValues
+	// fmt.Println("state", appState)
+
+	var err = t.Execute(writer, appState)
 	check(err)
 }
 
-func resolve(initValues resolver.SudokuValues) resolver.SudokuValues {
-	fmt.Printf("BEGIN of resolving: \t %s \n", time.Now())
-	result := resolver.Resolve(initValues)
-	fmt.Printf("END of resolving: \t %s \n", time.Now())
-	return result
-}
-
-func resolveHandler(writer http.ResponseWriter, request *http.Request) {
+func solutionHandler(writer http.ResponseWriter, request *http.Request) {
 	initSudokuValues := resolver.SudokuValues{}
 
 	for i := 0; i < 9; i++ {
@@ -60,20 +87,24 @@ func resolveHandler(writer http.ResponseWriter, request *http.Request) {
 		}
 	}
 
-	sudokuValues := resolve(initSudokuValues)
+	appState.Solution = resolve(initSudokuValues)
 
-	html, err := template.ParseFiles("templates/solution.html")
-	check(err)
-	err = html.Execute(writer, sudokuValues)
+	var err = tSolution.Execute(writer, appState)
 	check(err)
 }
 
-func main() {
-	fmt.Println("Starting Sudokizer")
-
-	http.HandleFunc("/main", mainHandler)
-	http.HandleFunc("/resolve", resolveHandler)
-
-	err := http.ListenAndServe("localhost:8080", nil)
-	log.Fatal(err)
+func resolve(initValues resolver.SudokuValues) SudokuSolution {
+	timeStart := time.Now()
+	fmt.Printf("BEGIN of resolving: \t %s \n", timeStart)
+	values := resolver.Resolve(initValues)
+	timeEnd := time.Now()
+	fmt.Printf("END of resolving: \t %s \n", timeEnd)
+	processingTime := timeEnd.Sub(timeStart)
+	
+	return SudokuSolution{
+		Values: values, 
+		TimeStart: timeStart.Format(time.RFC3339), 
+		TimeEnd: timeEnd.Format(time.RFC3339),
+		ProcessingTime: processingTime,
+	}
 }
