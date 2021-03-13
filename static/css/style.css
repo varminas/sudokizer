@@ -25,15 +25,15 @@
     vertical-align: top;
 }
 
-.solution .solution-table {
+.solution .sudoku-table {
     margin-bottom: 2rem;
 }
 
-.solution-table tr {
+.sudoku-table tr {
     height: 32px;
 }
 
-.solution-table td {
+.sudoku-table td {
     width: 32px;
     text-align: center;
     border: black 1px solid;

@@ -22,7 +22,7 @@
         <div class="data-input">
             <h2>Input</h2>
             <form action="/solution" method="POST">
-                <table>
+                <table class="sudoku-table">
                     {{range $i, $iv := .Inputs.Values}}
                     <tr>
                         {{range $j, $jv := .}}
