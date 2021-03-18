@@ -42,3 +42,7 @@
 .solution .processing-time {
     font-weight: bold;
 }
+
+.dark-input {
+    background-color: #e2e7ed;
+}

@@ -26,10 +26,16 @@
                     {{range $i, $iv := .Inputs.Values}}
                     <tr>
                         {{range $j, $jv := .}}
-                        <td>
-                            <input type="text" name="value-{{$i}}-{{$j}}" value="{{.}}">
+                            {{if (ne $jv 0)}}
+                            <td>
+                                <input type="text" name="value-{{$i}}-{{$j}}" value="{{.}}">
+                            </td>
+                            {{else}}
+                            <td class="dark-input">
+                                <input type="text" name="value-{{$i}}-{{$j}}" value="" class="dark-input">
+                            </td>
+                            {{end}}
                         {{end}}
-                        </td>
                     </tr>
                     {{end}}
                 </table>
