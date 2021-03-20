@@ -124,7 +124,6 @@ func solutionHandler(writer http.ResponseWriter, request *http.Request) {
 			if err != nil {
 				formValueInt = 0
 			}
-			// checkInt(formValueInt)
 
 			initSudokuValues.Values[i][j] = int(formValueInt)
 		}
@@ -139,12 +138,14 @@ func solutionHandler(writer http.ResponseWriter, request *http.Request) {
 
 func resolve(initValues model.SudokuValues) model.SudokuSolution {
 	timeStart := time.Now()
+	fmt.Println("-----------------------------------")
 	fmt.Printf("BEGIN of resolving: \t %s \n", timeStart)
 
 	values := resolver.Resolve(initValues)
 
 	timeEnd := time.Now()
 	fmt.Printf("END of resolving: \t %s \n", timeEnd)
+	fmt.Println("-----------------------------------\n\n")
 
 	processingTime := timeEnd.Sub(timeStart)
 	
