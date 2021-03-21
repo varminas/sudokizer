@@ -107,7 +107,7 @@ func resolveSingleMissingValues(tmpResult *[9][9]int) MissingValues {
 }
 
 func findMissingValuesAndIndexes(row [9]int) ([]int, []int) {
-	valuesRegister := make([]int, SIZE + 1) // 10 because highest possible input value is 9
+	valuesRegister := make([]int, SIZE+1) // 10 because highest possible input value is 9
 	indexesRegister := []int{}
 	for i, v := range row {
 		if v == 0 {
@@ -144,11 +144,11 @@ func isInCol(board *[9][9]int, col int, number int) bool {
 }
 
 func isInBox(board *[9][9]int, row int, col int, number int) bool {
-	r := row - row % BOX
-	c := col - col % BOX
+	r := row - row%BOX
+	c := col - col%BOX
 
-	for i := r; i < r + BOX; i++ {
-		for j := c; j < c + BOX; j++ {
+	for i := r; i < r+BOX; i++ {
+		for j := c; j < c+BOX; j++ {
 			if board[i][j] == number {
 				return true
 			}
@@ -158,30 +158,30 @@ func isInBox(board *[9][9]int, row int, col int, number int) bool {
 }
 
 func isOk(board *[9][9]int, row int, col int, number int) bool {
-	return !isInRow(board, row, number) && 
-		   !isInCol(board, col, number) && 
-		   !isInBox(board, row, col, number);
+	return !isInRow(board, row, number) &&
+		!isInCol(board, col, number) &&
+		!isInBox(board, row, col, number)
 }
 
 func solveWithBackTracking(board *[9][9]int) bool {
 	for row := 0; row < SIZE; row++ {
 		for col := 0; col < SIZE; col++ {
-		  if board[row][col] == EMPTY {
-			for number := 1; number <= SIZE; number++ {
-			  if isOk(board, row, col, number) {
-				board[row][col] = number;
-			  
-				if solveWithBackTracking(board) {
-				  return true;
-				} else {
-				  board[row][col] = EMPTY;
+			if board[row][col] == EMPTY {
+				for number := 1; number <= SIZE; number++ {
+					if isOk(board, row, col, number) {
+						board[row][col] = number
+
+						if solveWithBackTracking(board) {
+							return true
+						} else {
+							board[row][col] = EMPTY
+						}
+					}
 				}
-			  }
+
+				return false
 			}
-		
-			return false;
-		  }
 		}
-	  }
+	}
 	return true
 }
