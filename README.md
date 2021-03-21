@@ -1,2 +1,2 @@
 # sudokizer
-Sudoku resolver written in go language
+## Sudoku resolver written in go language
