@@ -58,56 +58,17 @@ func mainHandler(writer http.ResponseWriter, request *http.Request) {
 func homeHandler(writer http.ResponseWriter, request *http.Request) {
 	sudokuValues := model.SudokuValues{}
 	// TODO: delete Init values 
-	sudokuValues.Values[0][0] = 4
-	sudokuValues.Values[0][1] = 0
-	sudokuValues.Values[0][2] = 2
-	sudokuValues.Values[0][3] = 0
-	sudokuValues.Values[0][4] = 0
-	sudokuValues.Values[0][5] = 0
-	sudokuValues.Values[0][6] = 0
-	sudokuValues.Values[0][7] = 0
-	sudokuValues.Values[0][8] = 6
-
-	sudokuValues.Values[1][1] = 0
-	sudokuValues.Values[1][2] = 0
-	sudokuValues.Values[1][4] = 0
-	sudokuValues.Values[1][6] = 2
-	sudokuValues.Values[1][7] = 8
-
-	sudokuValues.Values[2][0] = 8
-	sudokuValues.Values[2][1] = 7
-	sudokuValues.Values[2][4] = 6
-	sudokuValues.Values[2][5] = 1
-
-	sudokuValues.Values[3][0] = 1
-	sudokuValues.Values[3][1] = 2
-	sudokuValues.Values[3][6] = 3
-	sudokuValues.Values[3][8] = 8
-
-	sudokuValues.Values[4][0] = 0
-	sudokuValues.Values[4][1] = 0
-	sudokuValues.Values[4][2] = 0
-	sudokuValues.Values[4][4] = 4
-
-	sudokuValues.Values[5][0] = 3
-	sudokuValues.Values[5][1] = 0
-	sudokuValues.Values[5][2] = 4
-	sudokuValues.Values[5][7] = 2
-	sudokuValues.Values[5][8] = 5
-
-	sudokuValues.Values[6][3] = 9
-	sudokuValues.Values[6][4] = 7
-	sudokuValues.Values[6][7] = 6
-	sudokuValues.Values[6][8] = 3
-
-	sudokuValues.Values[7][1] = 4
-	sudokuValues.Values[7][2] = 7
-	sudokuValues.Values[7][3] = 0
-	sudokuValues.Values[7][4] = 0
-
-	sudokuValues.Values[8][0] = 5
-	sudokuValues.Values[8][6] = 5
-	sudokuValues.Values[8][8] = 4
+	sudokuValues.Values = [9][9]int{
+		{0, 1, 0, 0, 0, 0, 7, 0, 3},
+		{3, 0, 0, 0, 0, 8, 0, 6, 0},
+		{9, 0, 0, 0, 1, 3, 0, 0, 0},
+		{0, 0, 4, 0, 0, 0, 0, 0, 5},
+		{0, 0, 0, 2, 9, 4, 0, 0, 0},
+		{7, 0, 0, 0, 0, 0, 1, 0, 0},
+		{0, 0, 0, 3, 8, 0, 0, 0, 9},
+		{0, 5, 0, 6, 0, 0, 0, 0, 4},
+		{2, 0, 6, 0, 0, 0, 0, 1, 0},
+	}
 
 	appState.Inputs = sudokuValues
 
