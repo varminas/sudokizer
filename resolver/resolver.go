@@ -20,7 +20,6 @@ type MissingValues struct {
 
 func Resolve(initSudokuValues model.SudokuValues) model.SudokuValues {
 	tmpResult := initSudokuValues.Values
-	// rand.Seed(time.Now().UnixNano())
 
 	// missingValues := resolveSingleMissingValues(&tmpResult)
 	// fmt.Printf("missRows %#v \n\n", missingValues.Rows)
@@ -124,10 +123,6 @@ func findMissingValuesAndIndexes(row [9]int) ([]int, []int) {
 		}
 	}
 	return result, indexesRegister
-}
-
-func randFromRange() int {
-	return rand.Intn(SIZE - 1)
 }
 
 func isInRow(board *[9][9]int, row int, number int) bool {
