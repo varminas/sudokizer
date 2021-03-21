@@ -58,54 +58,56 @@ func mainHandler(writer http.ResponseWriter, request *http.Request) {
 func homeHandler(writer http.ResponseWriter, request *http.Request) {
 	sudokuValues := model.SudokuValues{}
 	// TODO: delete Init values 
-	sudokuValues.Values[0][0] = 9
-	sudokuValues.Values[0][1] = 1
-	sudokuValues.Values[0][2] = 5
-	sudokuValues.Values[0][3] = 3
-	sudokuValues.Values[0][4] = 4
-	sudokuValues.Values[0][8] = 7
+	sudokuValues.Values[0][0] = 4
+	sudokuValues.Values[0][1] = 0
+	sudokuValues.Values[0][2] = 2
+	sudokuValues.Values[0][3] = 0
+	sudokuValues.Values[0][4] = 0
+	sudokuValues.Values[0][5] = 0
+	sudokuValues.Values[0][6] = 0
+	sudokuValues.Values[0][7] = 0
+	sudokuValues.Values[0][8] = 6
 
-	sudokuValues.Values[1][1] = 8
-	sudokuValues.Values[1][2] = 3
-	sudokuValues.Values[1][4] = 9
-	sudokuValues.Values[1][5] = 7
-	sudokuValues.Values[1][7] = 5
+	sudokuValues.Values[1][1] = 0
+	sudokuValues.Values[1][2] = 0
+	sudokuValues.Values[1][4] = 0
+	sudokuValues.Values[1][6] = 2
+	sudokuValues.Values[1][7] = 8
 
-	sudokuValues.Values[2][0] = 4
-	sudokuValues.Values[2][1] = 2
-	sudokuValues.Values[2][2] = 7
-	sudokuValues.Values[2][7] = 1
+	sudokuValues.Values[2][0] = 8
+	sudokuValues.Values[2][1] = 7
+	sudokuValues.Values[2][4] = 6
+	sudokuValues.Values[2][5] = 1
 
-	sudokuValues.Values[3][2] = 2
-	sudokuValues.Values[3][3] = 6
-	sudokuValues.Values[3][4] = 8
-	sudokuValues.Values[3][6] = 4
+	sudokuValues.Values[3][0] = 1
+	sudokuValues.Values[3][1] = 2
+	sudokuValues.Values[3][6] = 3
+	sudokuValues.Values[3][8] = 8
 
-	sudokuValues.Values[4][0] = 7
-	sudokuValues.Values[4][2] = 4
-	sudokuValues.Values[4][3] = 2
-	sudokuValues.Values[4][5] = 9
+	sudokuValues.Values[4][0] = 0
+	sudokuValues.Values[4][1] = 0
+	sudokuValues.Values[4][2] = 0
+	sudokuValues.Values[4][4] = 4
 
-	sudokuValues.Values[5][2] = 8
-	sudokuValues.Values[5][4] = 3
-	sudokuValues.Values[5][5] = 4
-	sudokuValues.Values[5][6] = 1
-	sudokuValues.Values[5][7] = 6
+	sudokuValues.Values[5][0] = 3
+	sudokuValues.Values[5][1] = 0
+	sudokuValues.Values[5][2] = 4
+	sudokuValues.Values[5][7] = 2
+	sudokuValues.Values[5][8] = 5
 
-	sudokuValues.Values[6][0] = 8
-	sudokuValues.Values[6][7] = 4
+	sudokuValues.Values[6][3] = 9
+	sudokuValues.Values[6][4] = 7
+	sudokuValues.Values[6][7] = 6
+	sudokuValues.Values[6][8] = 3
 
-	sudokuValues.Values[7][2] = 9
-	sudokuValues.Values[7][6] = 7
-	sudokuValues.Values[7][7] = 2
-	sudokuValues.Values[7][8] = 6
+	sudokuValues.Values[7][1] = 4
+	sudokuValues.Values[7][2] = 7
+	sudokuValues.Values[7][3] = 0
+	sudokuValues.Values[7][4] = 0
 
-	sudokuValues.Values[8][1] = 5
-	sudokuValues.Values[8][2] = 6
-	sudokuValues.Values[8][5] = 3
-	sudokuValues.Values[8][6] = 8
-	sudokuValues.Values[8][8] = 1
-
+	sudokuValues.Values[8][0] = 5
+	sudokuValues.Values[8][6] = 5
+	sudokuValues.Values[8][8] = 4
 
 	appState.Inputs = sudokuValues
 

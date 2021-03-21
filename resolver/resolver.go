@@ -3,13 +3,18 @@ package resolver
 import (
 	"fmt"
 	"math/rand"
+
 	// "sort"
 	"sudokizer/model"
 )
 
+var SIZE int = 9
+var BOX int = 3
+var EMPTY int = 0
+
 type MissingValues struct {
-	Rows [][]int
-	Cols [][]int
+	Rows    [][]int
+	Cols    [][]int
 	Squares [][]int
 }
 
@@ -17,27 +22,30 @@ func Resolve(initSudokuValues model.SudokuValues) model.SudokuValues {
 	tmpResult := initSudokuValues.Values
 	// rand.Seed(time.Now().UnixNano())
 
-	missingValues := resolveSingleMissingValues(&tmpResult)
-	fmt.Printf("missRows %#v \n\n", missingValues.Rows)
-	fmt.Printf("missColu %#v \n\n", missingValues.Cols)
-	fmt.Printf("missSqua %#v \n\n", missingValues.Squares)
+	// missingValues := resolveSingleMissingValues(&tmpResult)
+	// fmt.Printf("missRows %#v \n\n", missingValues.Rows)
+	// fmt.Printf("missColu %#v \n\n", missingValues.Cols)
+	// fmt.Printf("missSqua %#v \n\n", missingValues.Squares)
 
-	resolveBySmallestArray(&tmpResult, missingValues)
+	// Apply BackTracking algorithm
+	solveWithBackTracking(&tmpResult)
 
 	return model.SudokuValues{Values: tmpResult}
 }
 
-func resolveBySmallestArray(tmpResult* [9][9]int, missingValues MissingValues) {
-	
+// Apply Dancing Links method
+
+func resolveByDancingLinks(tmpResult *[9][9]int) {
+
 }
 
-func resolveSingleMissingValues(tmpResult* [9][9]int) MissingValues {
-	missingValuesInRows := make([][]int, 9)
-	missingValuesInColumns := make([][]int, 9)
-	missingValuesInSquares := make([][]int, 9)
+func resolveSingleMissingValues(tmpResult *[9][9]int) MissingValues {
+	missingValuesInRows := make([][]int, SIZE)
+	missingValuesInColumns := make([][]int, SIZE)
+	missingValuesInSquares := make([][]int, SIZE)
 
 	foundSingleMissingValue := true
-	for ; foundSingleMissingValue == true; {
+	for foundSingleMissingValue == true {
 		for i, row := range tmpResult {
 			foundSingleMissingValue = true
 			// Missing row values
@@ -70,7 +78,7 @@ func resolveSingleMissingValues(tmpResult* [9][9]int) MissingValues {
 
 			// Missing 9x9 square values
 			initSquareValues := [9]int{}
-			for idx := 0; idx < 9; idx++ {
+			for idx := 0; idx < SIZE; idx++ {
 				squareRowIdx := (idx / 3) + (i / 3 * 3)
 				squareColIdx := (idx % 3) + (i % 3 * 3)
 				initSquareValues[idx] = tmpResult[squareRowIdx][squareColIdx]
@@ -93,14 +101,14 @@ func resolveSingleMissingValues(tmpResult* [9][9]int) MissingValues {
 	}
 
 	return MissingValues{
-		Rows: missingValuesInRows,
-		Cols: missingValuesInColumns,
+		Rows:    missingValuesInRows,
+		Cols:    missingValuesInColumns,
 		Squares: missingValuesInSquares,
 	}
 }
 
 func findMissingValuesAndIndexes(row [9]int) ([]int, []int) {
-	valuesRegister := make([]int, 10) // 10 because highest possible input value is 9
+	valuesRegister := make([]int, SIZE + 1) // 10 because highest possible input value is 9
 	indexesRegister := []int{}
 	for i, v := range row {
 		if v == 0 {
@@ -119,5 +127,66 @@ func findMissingValuesAndIndexes(row [9]int) ([]int, []int) {
 }
 
 func randFromRange() int {
-	return rand.Intn(9 - 1)
+	return rand.Intn(SIZE - 1)
+}
+
+func isInRow(board *[9][9]int, row int, number int) bool {
+	for i := 0; i < SIZE; i++ {
+		if board[row][i] == number {
+			return true
+		}
+	}
+	return false
+}
+
+func isInCol(board *[9][9]int, col int, number int) bool {
+	for i := 0; i < SIZE; i++ {
+		if board[i][col] == number {
+			return true
+		}
+	}
+	return false
+}
+
+func isInBox(board *[9][9]int, row int, col int, number int) bool {
+	r := row - row % BOX
+	c := col - col % BOX
+
+	for i := r; i < r + BOX; i++ {
+		for j := c; j < c + BOX; j++ {
+			if board[i][j] == number {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func isOk(board *[9][9]int, row int, col int, number int) bool {
+	return !isInRow(board, row, number) && 
+		   !isInCol(board, col, number) && 
+		   !isInBox(board, row, col, number);
+}
+
+func solveWithBackTracking(board *[9][9]int) bool {
+	for row := 0; row < SIZE; row++ {
+		for col := 0; col < SIZE; col++ {
+		  if board[row][col] == EMPTY {
+			for number := 1; number <= SIZE; number++ {
+			  if isOk(board, row, col, number) {
+				board[row][col] = number;
+			  
+				if solveWithBackTracking(board) {
+				  return true;
+				} else {
+				  board[row][col] = EMPTY;
+				}
+			  }
+			}
+		
+			return false;
+		  }
+		}
+	  }
+	return true
 }
