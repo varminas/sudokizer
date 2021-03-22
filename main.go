@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"sudokizer/model"
-	"sudokizer/resolver"
+	"github.com/varminas/sudokizer/model"
+	"github.com/varminas/sudokizer/resolver"
 )
 
 var t = template.Must(template.ParseFiles("templates/index.html"))

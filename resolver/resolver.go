@@ -1,8 +1,6 @@
 package resolver
 
-import (
-	"sudokizer/model"
-)
+import "github.com/varminas/sudokizer/model"
 
 var SIZE int = 9
 var BOX int = 3
