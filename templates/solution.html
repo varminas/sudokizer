@@ -1,0 +1,20 @@
+{{ define "solution" }}
+<h2>Solution</h2>
+
+<table class="sudoku-table" cellspacing="2px">
+    {{range $i, $iv := .Values.Values}}
+    <tr>
+        {{range $j, $jv := .}}
+        <td>
+            {{.}}
+        {{end}}
+        </td>
+    </tr>
+    {{end}}
+</table>
+<div class="processing-time">
+    <div>Start: {{.TimeStart}}</div>
+    <div>End: {{.TimeEnd}}</div>
+    <div>Processing time: {{.ProcessingTime}}</div>
+</div>
+{{end}}

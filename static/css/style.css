@@ -1,0 +1,48 @@
+.data-input {
+    display: inline-block;
+    margin-right: 5rem;
+}
+
+.data-input tr {
+    height: 32px;
+}
+
+.data-input td {
+    border: black 1px solid;
+    width: 32px;
+    text-align: center;
+    padding: 0;
+}
+
+.data-input td input {
+    text-align: center;
+    width: 32px;
+    border: none;
+}
+
+.solution {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.solution .sudoku-table {
+    margin-bottom: 2rem;
+}
+
+.sudoku-table tr {
+    height: 32px;
+}
+
+.sudoku-table td {
+    width: 32px;
+    text-align: center;
+    border: black 1px solid;
+}
+
+.solution .processing-time {
+    font-weight: bold;
+}
+
+.dark-input {
+    background-color: #e2e7ed;
+}
