@@ -17,6 +17,7 @@ var tSolution = template.Must(template.ParseFiles("templates/index.html", "templ
 
 type AppState struct {
 	Inputs model.SudokuValues
+	Algorithm model.Algorithm
 	Solution model.SudokuSolution
 }
 
@@ -92,19 +93,30 @@ func solutionHandler(writer http.ResponseWriter, request *http.Request) {
 		}
 	}
 
+	// get alhorithm choise
+	algorithm := request.FormValue("algorithm")
+	switch algorithm {
+	case "back-tracking": 
+		appState.Algorithm = model.BackTracking
+	case "dancing-links":
+		appState.Algorithm = model.DancingLinks
+	default:
+		appState.Algorithm = model.BackTracking
+	}
+
 	appState.Inputs = initSudokuValues
-	appState.Solution = resolve(initSudokuValues)
+	appState.Solution = resolve(initSudokuValues, appState.Algorithm)
 
 	var err = tSolution.Execute(writer, appState)
 	check(err)
 }
 
-func resolve(initValues model.SudokuValues) model.SudokuSolution {
+func resolve(initValues model.SudokuValues, algorithm model.Algorithm) model.SudokuSolution {
 	timeStart := time.Now()
 	fmt.Println("-----------------------------------")
 	fmt.Printf("BEGIN of resolving: \t %s \n", timeStart)
 
-	values := resolver.Resolve(initValues)
+	values := resolver.Resolve(initValues, algorithm)
 
 	timeEnd := time.Now()
 	fmt.Printf("END of resolving: \t %s \n", timeEnd)

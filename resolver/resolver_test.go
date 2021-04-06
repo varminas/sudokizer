@@ -3,7 +3,8 @@ package resolver
 import (
 	"fmt"
 	"testing"
-	"sudokizer/model"
+
+	"github.com/varminas/sudokizer/model"
 )
 
 func TestResolve(t *testing.T) {
@@ -32,7 +33,7 @@ func TestResolve(t *testing.T) {
 		{2, 3, 6, 4, 5, 9, 8, 1, 7},
 	}
 
-	got := Resolve(grid).Values
+	got := Resolve(grid, model.BackTracking).Values
 	if got != want {
 		t.Errorf(errorString(grid, got, want))
 	}

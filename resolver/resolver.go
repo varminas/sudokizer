@@ -1,6 +1,8 @@
 package resolver
 
-import "github.com/varminas/sudokizer/model"
+import (
+	"github.com/varminas/sudokizer/model"
+)
 
 var SIZE int = 9
 var BOX int = 3
@@ -12,11 +14,17 @@ type MissingValues struct {
 	Squares [][]int
 }
 
-func Resolve(initSudokuValues model.SudokuValues) model.SudokuValues {
+func Resolve(initSudokuValues model.SudokuValues, algorithm model.Algorithm) model.SudokuValues {
 	tmpResult := initSudokuValues.Values
 
 	// Apply BackTracking algorithm
-	solveWithBackTracking(&tmpResult)
+	if algorithm == model.BackTracking {
+		solveWithBackTracking(&tmpResult)
+	}
+
+	if algorithm == model.DancingLinks {
+		resolveByDancingLinks(&tmpResult)
+	}
 
 	return model.SudokuValues{Values: tmpResult}
 }

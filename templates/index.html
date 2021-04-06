@@ -20,21 +20,27 @@
         <h1>SUDOKU resolver</h1>
 
         <div class="data-input">
-            <h2>Input</h2>
             <form action="/solution" method="POST">
+                <div class="input-title">
+                    <h2>Input</h2>
+                    <select name="algorithm" id="algorithm">
+                        <option value="back-tracking">BackTracking</option>
+                        <option value="dancing-links">Dancing Links</option>
+                    </select>
+                </div>
                 <table class="sudoku-table">
                     {{range $i, $iv := .Inputs.Values}}
                     <tr>
                         {{range $j, $jv := .}}
-                            {{if (ne $jv 0)}}
-                            <td>
-                                <input type="text" name="value-{{$i}}-{{$j}}" value="{{.}}">
-                            </td>
-                            {{else}}
-                            <td class="dark-input">
-                                <input type="text" name="value-{{$i}}-{{$j}}" value="" class="dark-input">
-                            </td>
-                            {{end}}
+                        {{if (ne $jv 0)}}
+                        <td>
+                            <input type="text" name="value-{{$i}}-{{$j}}" value="{{.}}">
+                        </td>
+                        {{else}}
+                        <td class="dark-input">
+                            <input type="text" name="value-{{$i}}-{{$j}}" value="" class="dark-input">
+                        </td>
+                        {{end}}
                         {{end}}
                     </tr>
                     {{end}}

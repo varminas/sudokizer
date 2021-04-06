@@ -29,6 +29,10 @@
     margin-bottom: 2rem;
 }
 
+.solution h2 {
+    margin-bottom: 1.5rem;
+}
+
 .sudoku-table tr {
     height: 32px;
 }
@@ -45,4 +49,13 @@
 
 .dark-input {
     background-color: #e2e7ed;
+}
+
+.input-title {
+    display: flex;
+    margin-bottom: 1rem;
+}
+
+.input-title h2 {
+    margin-right: 2rem;
 }

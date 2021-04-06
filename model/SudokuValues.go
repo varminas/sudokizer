@@ -12,3 +12,10 @@ type SudokuSolution struct {
 	TimeEnd string
 	ProcessingTime time.Duration
 }
+
+type Algorithm string
+
+const(
+	BackTracking Algorithm = "BackTracking"
+	DancingLinks Algorithm = "DancingLinks"
+)
