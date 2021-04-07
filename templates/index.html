@@ -24,8 +24,8 @@
                 <div class="input-title">
                     <h2>Input</h2>
                     <select name="algorithm" id="algorithm">
-                        <option value="back-tracking">BackTracking</option>
-                        <option value="dancing-links">Dancing Links</option>
+                        <option value="back-tracking" {{if (eq .Algorithm "BackTracking")}}selected{{end}}>BackTracking</option>
+                        <option value="dancing-links" {{if (eq .Algorithm "DancingLinks")}}selected{{end}}>Dancing Links</option>
                     </select>
                 </div>
                 <table class="sudoku-table">

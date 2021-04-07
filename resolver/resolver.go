@@ -1,6 +1,8 @@
 package resolver
 
 import (
+	"fmt"
+
 	"github.com/varminas/sudokizer/model"
 )
 
@@ -31,7 +33,7 @@ func Resolve(initSudokuValues model.SudokuValues, algorithm model.Algorithm) mod
 
 // Apply Dancing Links method
 func resolveByDancingLinks(tmpResult *[9][9]int) {
-
+	fmt.Println("!!! Not implemented yet !!!!")
 }
 
 func isInRow(board *[9][9]int, row int, number int) bool {
