@@ -93,22 +93,24 @@ func solutionHandler(writer http.ResponseWriter, request *http.Request) {
 		}
 	}
 
-	// get alhorithm choise
-	algorithm := request.FormValue("algorithm")
-	switch algorithm {
-	case "back-tracking": 
-		appState.Algorithm = model.BackTracking
-	case "dancing-links":
-		appState.Algorithm = model.DancingLinks
-	default:
-		appState.Algorithm = model.BackTracking
-	}
+	appState.Algorithm = getAlgorithm(request.FormValue("algorithm"))
 
 	appState.Inputs = initSudokuValues
 	appState.Solution = resolve(initSudokuValues, appState.Algorithm)
 
 	var err = tSolution.Execute(writer, appState)
 	check(err)
+}
+
+func getAlgorithm(algorithm string) model.Algorithm {
+	switch algorithm {
+	case "back-tracking": 
+		return model.BackTracking
+	case "dancing-links":
+		return model.DancingLinks
+	default:
+		return model.BackTracking
+	}
 }
 
 func resolve(initValues model.SudokuValues, algorithm model.Algorithm) model.SudokuSolution {
