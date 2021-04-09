@@ -5,7 +5,7 @@
     {{range $i, $iv := .Values.Values}}
     <tr>
         {{range $j, $jv := .}}
-        <td>
+        <td {{if (eq . 0)}}class="wrong"{{end}}>
             {{.}}
         {{end}}
         </td>

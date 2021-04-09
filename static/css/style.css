@@ -59,3 +59,7 @@
 .input-title h2 {
     margin-right: 2rem;
 }
+
+.wrong {
+    background-color: red;
+}
